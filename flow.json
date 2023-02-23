@@ -1,0 +1,35 @@
+{
+	"contracts": {
+		"ArtFlowz": "cadence/contracts/ArtFlowz.cdc",
+		"FiatToken": "cadence/contracts/FiatToken.cdc",
+		"FungibleToken": "cadence/contracts/FungibleToken.cdc",
+		"Person": "cadence/contracts/Person.cdc",
+		"OnChainMultiSig": "cadence/contracts/OnChainMultiSig.cdc"
+	},
+	"networks": {
+		"emulator": "127.0.0.1:3569",
+		"mainnet": "access.mainnet.nodes.onflow.org:9000",
+		"testnet": "access.devnet.nodes.onflow.org:9000"
+	},
+	"accounts": {
+		"default": {
+			"address": "f3fcd2c1a78f5eee",
+			"key": "3481fa581b874eb7e730285926243e11bc8d3f3899ec677723100eba8d8e3f55"
+		},
+		"emulator-account": {
+			"address": "f8d6e0586b0a20c7",
+			"key": "6d12eebfef9866c9b6fa92b97c6e705c26a1785b1e7944da701fc545a51d4673"
+		}
+	},
+	"deployments": {
+		"emulator": {
+			"default": [
+				"Person",
+				"ArtFlowz",
+				"FiatToken",
+				"FungibleToken",
+				"OnChainMultiSig"
+			]
+		}
+	}
+}
