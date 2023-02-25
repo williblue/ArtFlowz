@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@onflow/fcl": "^1.3.2",
+    "@onflow/types": "^1.0.5",
     "@types/node": "18.14.1",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
@@ -17,6 +19,11 @@
     "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-toastify": "^9.1.1",
+    "styled-components": "^5.3.6",
     "typescript": "4.9.5"
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.26"
   }
 }
