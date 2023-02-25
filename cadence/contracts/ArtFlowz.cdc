@@ -6,6 +6,7 @@
 import FiatToken from "./FiatToken.cdc"
 import FungibleToken from "./FungibleToken.cdc"
 import CreatorProfile from "./CreatorProfile.cdc"
+import ArtPiece from "./ArtPiece.cdc"
 
 pub contract ArtFlowz {
 
@@ -225,6 +226,14 @@ pub contract ArtFlowz {
                                 )
         }
 
+        // Commissioner
+        pub fun mint(name: String, description: String, image: String, creatorAddress: Address): @ArtPiece.NFT {
+            pre {
+                self.details.completed: "Can't mint artwork: Commission must first be completed."
+            }
+            return <-ArtPiece.mint(name: name, description: description, image: image, creatorAddress: creatorAddress)
+        }
+
         pub fun getFee(): UFix64 {
             return self.fee
         }
@@ -361,3 +370,4 @@ pub contract ArtFlowz {
     }
 
 }
+ 
