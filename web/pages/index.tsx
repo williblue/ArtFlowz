@@ -1,6 +1,7 @@
 import Hero from '@components/ui/Hero'
 import Head from 'next/head'
 
+
 export default function Home() {
   return (
     <>
