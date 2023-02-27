@@ -4,10 +4,6 @@ import styled from "styled-components"
 import logo from "/public/ArtFlowz_logo.png"
 import { useAuth } from "@components/auth/AuthProvider"
 
-interface Props {
-  profilePicture?: string
-}
-
 const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
@@ -61,7 +57,7 @@ const ProfilePicture = styled.img`
   border-radius: 50%;
 `
 
-const Navbar: FC<Props> = ({ profilePicture }) => {
+const Navbar: FC = () => {
   const { loggedIn, user, logIn, logOut } = useAuth()
   return (
     <Nav>
@@ -71,13 +67,12 @@ const Navbar: FC<Props> = ({ profilePicture }) => {
         </Link>
       </NavLogo>
       <NavLinks>
-        <NavLink href="/explore">Explore</NavLink>
-        <NavLink href="/categories">Categories</NavLink>
-        <Link href="/become-a-creator">
-          <CtaButton>Become a Creator</CtaButton>
-        </Link>
+        <NavLink href="/">Explore</NavLink>
+        <NavLink href="/">Categories</NavLink>
+        <CtaButton>Become a Creator</CtaButton>
         {loggedIn ? (
-          <ProfilePicture src={profilePicture} alt="Profile Picture" />
+          // <ProfilePicture src={profilePicture} alt="Profile Picture" />
+          <></>
         ) : (
           <NavLink onClick={() => logIn()}>Sign In</NavLink>
         )}
