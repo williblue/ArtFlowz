@@ -28,6 +28,7 @@ export default function useArtFlowz() {
     notes: String,
     link: String,
     uploadFile: String,
+    handleThankYouModalOpen: () => void,
   ) => {
     const id = toast.loading("Initializing...")
 
@@ -108,6 +109,7 @@ export default function useArtFlowz() {
             autoClose: 5000,
           })
         })
+      handleThankYouModalOpen()
     } catch (err) {
       toast.update(id, {
         render: "Error, try again later...",

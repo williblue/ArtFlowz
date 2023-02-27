@@ -10,8 +10,8 @@ import Navbar from "../Navbar"
 //Configure FCL
 fcl
   .config()
-  .put("accessNode.api", "https://access-testnet.onflow.org")
-  // .put("accessNode.api", "https://rest-testnet.onflow.org")
+  // .put("accessNode.api", "https://access-testnet.onflow.org")
+  .put("accessNode.api", "https://rest-testnet.onflow.org")
   .put("discovery.wallet", "https://flow-wallet-testnet.blocto.app/authn")
   // .put("discovery.wallet.method", "HTTP/POST")
   .put("discovery.wallet.method", "IFRAME/RPC")
@@ -22,6 +22,9 @@ fcl
   .put("0xFiatToken", "0xa983fecbed621163")
   .put("0xFlowToken", "0x7e60df042a9c0868")
   .put("0xFIND", "0x35717efbbce11c74")
+  .put("0xArtFlowz", "0x6200fc836822f78c")
+  .put("0xArtPiece", "0x6200fc836822f78c")
+  .put("0xCreatorProfile", "0x6200fc836822f78c")
 
 interface Props {
   children: any

@@ -42,6 +42,7 @@ type Props = {
   creatorName: string
   creatorImage: string
   creatorAddress: string
+  handleThankYouModalOpen: () => void
 }
 
 const CreateCommissionModal: FC<Props> = ({
@@ -50,6 +51,7 @@ const CreateCommissionModal: FC<Props> = ({
   creatorName,
   creatorImage,
   creatorAddress,
+  handleThankYouModalOpen,
 }) => {
   const [genre, setGenre] = useState("")
   const [offerAmount, setOfferAmount] = useState("")
@@ -96,7 +98,16 @@ const CreateCommissionModal: FC<Props> = ({
     }
     // Submit commission request
     onClose()
-    createCommission(creatorAddress, offerAmount, genre, nsfw, notes, link, cid)
+    createCommission(
+      creatorAddress,
+      offerAmount,
+      genre,
+      nsfw,
+      notes,
+      link,
+      cid,
+      handleThankYouModalOpen,
+    )
   }
 
   const handleFileDrop = (event: React.DragEvent<HTMLInputElement>) => {
@@ -231,22 +242,7 @@ const CreateCommissionModal: FC<Props> = ({
             />
             I agree to the terms and conditions.
           </CheckBoxWrapper>
-          <SubmitButton
-            // onClick={() =>
-            //   createCommission(
-            //     creatorAddress,
-            //     offerAmount,
-            //     genre,
-            //     nsfw,
-            //     notes,
-            //     link,
-            //     cid,
-            //   )
-            // }
-            type="submit"
-          >
-            Confirm
-          </SubmitButton>
+          <SubmitButton type="submit">Confirm</SubmitButton>
         </form>
       </ModalContainer>
     </ModalOverlay>

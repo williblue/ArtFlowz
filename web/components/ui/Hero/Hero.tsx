@@ -3,6 +3,7 @@ import styled from "styled-components"
 import HeroImg from "/public/dalleart.png"
 import DalleImg from "/public/dalle.jpg"
 import CreateCommissionModal from "../CreateCommissionModal"
+import ThankYouModal from "../ThankYouModal"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -155,6 +156,7 @@ const RightColumn = styled.div`
 
 const Hero: FC = () => {
   const [showModal, setShowModal] = useState(false)
+  const [thankYouModal, setThankYouModal] = useState(false)
 
   const handleModalClose = () => {
     setShowModal(false)
@@ -162,6 +164,14 @@ const Hero: FC = () => {
 
   const handleButtonClick = () => {
     setShowModal(true)
+  }
+
+  const handleThankYouModalClose = () => {
+    setThankYouModal(false)
+  }
+
+  const handleThankYouModalOpen = () => {
+    setThankYouModal(true)
   }
 
   return (
@@ -201,6 +211,13 @@ const Hero: FC = () => {
         creatorName={"dalle"}
         creatorImage={DalleImg.src}
         creatorAddress={"0x"}
+        handleThankYouModalOpen={handleThankYouModalOpen}
+      />
+      <ThankYouModal
+        isOpen={thankYouModal}
+        onClose={handleThankYouModalClose}
+        creatorName={"dalle"}
+        creatorImage={DalleImg.src}
       />
     </Container>
   )
