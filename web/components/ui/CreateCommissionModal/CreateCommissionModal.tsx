@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import {
   ModalOverlay,
   ModalContainer,
@@ -16,6 +16,7 @@ import {
   UploadFile,
   CreatorImg,
 } from "./styles"
+import { create } from "ipfs-http-client"
 
 type Props = {
   isOpen: boolean
@@ -40,6 +41,29 @@ const CreateCommissionModal: FC<Props> = ({
   const [agree, setAgree] = useState(false)
   const [genreFile, setGenreFile] = useState<File | undefined>(undefined)
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined)
+  const [cid, setCid] = useState("")
+  const [fileUrl, updateFileUrl] = useState<any>()
+
+  const projectId = process.env.NEXT_PUBLIC_INFURA_PROJECT_ID
+  const projectSecret = process.env.NEXT_PUBLIC_INFURA_API_SECRET
+  const auth =
+    "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64")
+  const client = create({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+    apiPath: "/api/v0",
+    headers: {
+      authorization: auth,
+    },
+  })
+
+  useEffect(() => {
+    console.log("cid changed: ", cid)
+  }, [cid])
+
+  // const infuraUrl = `https://ipfs.infura.io:5001/api/v0/?arg=${projectId}`
+  // const ipfs = create({ url: infuraUrl })
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -68,9 +92,23 @@ const CreateCommissionModal: FC<Props> = ({
     event.preventDefault()
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0]
-    readFile(file)
+    if (!file) return
+    // const { cid } = await ipfs.add(file)
+    try {
+      const added = await client.add(file)
+      const url = `https://artflowz.infura-ipfs.io/ipfs/${added.path}`
+      updateFileUrl(url)
+      console.log(url)
+      // set the cid
+      setCid(added.path)
+      readFile(file)
+    } catch (error) {
+      console.log("Error uploading file: ", error)
+    }
   }
 
   const readFile = (file: File | undefined) => {
@@ -140,14 +178,15 @@ const CreateCommissionModal: FC<Props> = ({
                 accept="image/*, video/*"
                 onChange={handleFileChange}
               />
-              {previewUrl && (
+              {/* {previewUrl && (
                 <img
                   width={50}
                   height={"auto"}
                   src={previewUrl}
                   alt="Preview"
                 />
-              )}
+              )} */}
+              {fileUrl && <img src={fileUrl} width="50px" />}
             </Column>
           </Row>
           <Label htmlFor="notes">Notes:</Label>
