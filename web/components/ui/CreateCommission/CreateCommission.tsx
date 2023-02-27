@@ -1,6 +1,6 @@
 import { FC } from "react"
 import styled from "styled-components"
-import AnonymImg from "/public/anonym.png"
+// import AnonymImg from "/public/anonym.png"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -123,7 +123,7 @@ const CreateCommission: FC = () => {
     <Container>
       <HeaderText>New commission request</HeaderText>
       <Wrapper>
-        <RoundImage src={AnonymImg.src} alt="anonym-profile-image" />
+        {/* <RoundImage src={AnonymImg.src} alt="anonym-profile-image" /> */}
         <div>
           <Text>@anonymous</Text>
           <EmailText>Email: anonymous@gmail.com</EmailText>

@@ -9,67 +9,24 @@ import "react-toastify/dist/ReactToastify.css"
 //Configure FCL
 fcl
   .config()
-  .put("accessNode.api", process.env.NEXT_PUBLIC_ACCESS_NODE_API)
-  .put("discovery.wallet", process.env.NEXT_PUBLIC_CHALLENGE_HANDSHAKE)
+  .put("accessNode.api", "https://access-testnet.onflow.org")
+  .put("discovery.wallet", "https://flow-wallet-testnet.blocto.app/authn")
   .put("discovery.wallet.method", "HTTP/POST")
+  .put("0xFungibleToken", "0x9a0766d93b6608b7")
+  .put("0xNonFungibleToken", "0x631e88ae7f1d7c20")
+  .put("0xMetadataViews", "0x631e88ae7f1d7c20")
+  .put("0xProfile", "0x35717efbbce11c74")
+  .put("0xFiatToken", "0xa983fecbed621163")
+  .put("0xFlowToken", "0x7e60df042a9c0868")
+  .put("0xFIND", "0x35717efbbce11c74")
 
-  .put("0xFungibleToken", process.env.NEXT_PUBLIC_FUNGIBLE_TOKEN_ADDRESS)
-  .put("0xFUSD", process.env.NEXT_PUBLIC_FUSD_ADDRESS)
-  .put("0xNonFungibleToken", process.env.NEXT_PUBLIC_NON_FUNGIBLE_TOKEN_ADDRESS)
-  .put("0xMetadataViews", process.env.NEXT_PUBLIC_METADATA_VIEWS_ADDRESS)
-  .put("0xProfile", process.env.NEXT_PUBLIC_PROFILE_ADDRESS)
-  .put("0xFiatToken", process.env.NEXT_PUBLIC_FIAT_TOKEN_ADDRESS)
-  .put("0xFlowToken", process.env.NEXT_PUBLIC_FLOW_TOKEN_ADDRESS)
-  .put("0xFIND", process.env.NEXT_PUBLIC_FIND_ADDRESS)
-  .put("0xFindMarket", process.env.NEXT_PUBLIC_FIND_MARKET_ADDRESS)
-  .put("0xFindMarketSale", process.env.NEXT_PUBLIC_FIND_MARKET_SALE_ADDRESS)
-  .put(
-    "0xFindMarketDirectOfferEscrow",
-    process.env.NEXT_PUBLIC_FIND_MARKET_DIRECT_OFFER_ESCROW_ADDRESS,
-  )
-  .put(
-    "0xFindMarketDirectOfferSoft",
-    process.env.NEXT_PUBLIC_FIND_MARKET_DIRECT_OFFER_SOFT_ADDRESS,
-  )
-  .put(
-    "0xFindMarketAuctionEscrow",
-    process.env.NEXT_PUBLIC_FIND_MARKET_AUCTION_ESCROW_ADDRESS,
-  )
-  .put(
-    "0xFindMarketAuctionSoft",
-    process.env.NEXT_PUBLIC_FIND_MARKET_AUCTION_SOFT_ADDRESS,
-  )
-  .put("0xDandy", process.env.NEXT_PUBLIC_DANDY_ADDRESS)
-  .put(
-    "0xFindLeaseMarketSale",
-    process.env.NEXT_PUBLIC_FIND_LEASE_MARKET_SALE_ADDRESS,
-  )
-  .put(
-    "0xFindLeaseMarketAuctionSoft",
-    process.env.NEXT_PUBLIC_FIND_LEASE_MARKET_AUCTION_SOFT_ADDRESS,
-  )
-  .put(
-    "0xFindLeaseMarketDirectOfferSoft",
-    process.env.NEXT_PUBLIC_FIND_LEASE_MARKET_DIRECT_OFFER_SOFT_ADDRESS,
-  )
-  .put("0xFindLeaseMarket", process.env.NEXT_PUBLIC_FIND_LEASE_MARKET_ADDRESS)
-
-  interface Props {
-    children: any;
-  }
+interface Props {
+  children: any
+}
 
 const Layout: FC<Props> = ({ children }) => {
-
   return (
     <>
-      <Head>
-        <link
-          rel="preload"
-          href="/fonts/Pixelar/Pixelar-Regular-W01-Regular.ttf"
-          as="font"
-          crossOrigin=""
-        />
-      </Head>
       <ToastContainer position="bottom-right" pauseOnFocusLoss={false} />
       <main>{children}</main>
       <Footer />

@@ -1,7 +1,8 @@
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 import styled from "styled-components"
 import HeroImg from "/public/dalleart.png"
 import DalleImg from "/public/dalle.jpg"
+import CreateCommissionModal from "../CreateCommissionModal"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -136,6 +137,16 @@ const RightColumn = styled.div`
 `
 
 const Hero: FC = () => {
+  const [showModal, setShowModal] = useState(false)
+
+  const handleModalClose = () => {
+    setShowModal(false)
+  }
+
+  const handleButtonClick = () => {
+    setShowModal(true)
+  }
+
   return (
     <Container>
       <HeroImage />
@@ -164,9 +175,10 @@ const Hero: FC = () => {
         <HeroText>Art made personal.</HeroText>
         <ButtonContainer>
           <ButtonUnfilled>VIEW PROFILE</ButtonUnfilled>
-          <Button>NEW REQEUST</Button>
+          <Button onClick={handleButtonClick}>NEW REQEUST</Button>
         </ButtonContainer>
       </RightColumn>
+      <CreateCommissionModal isOpen={showModal} onClose={handleModalClose} />
     </Container>
   )
 }
