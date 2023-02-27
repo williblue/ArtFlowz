@@ -14,19 +14,24 @@ export const ModalOverlay = styled.div<{ isOpen: boolean }>`
 `
 
 export const ModalContainer = styled.div`
-  background-color: white;
-  padding: 50px;
+  position: relative;
+  background-color: #fff;
   border-radius: 10px;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  width: 80%;
+  max-width: 800px;
+  margin: 0 auto;
+  margin-top: 60px;
 `
 
 export const CloseButton = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: transparent;
+  font-size: 30px;
+  font-weight: bold;
+  background: none;
   border: none;
-  font-size: 24px;
   cursor: pointer;
 `
 
