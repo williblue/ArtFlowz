@@ -4,9 +4,11 @@ import Head from "next/head"
 import favicon from "public/favicon.ico"
 import Layout from "@components/common/Layout"
 import AuthProvider from "@components/auth/AuthProvider"
+import UserProvider from "@components/user/UserProvider"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
+    <UserProvider>
       <AuthProvider>
         <Layout>
           <Head>
@@ -17,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
         </Layout>
       </AuthProvider>
+    </UserProvider>
   )
 }
 export default MyApp

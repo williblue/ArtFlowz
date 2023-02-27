@@ -12,7 +12,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 2rem 0rem;
   font-family: "Sinhala MN", Arial, sans-serif;
 
   @media (min-width: 768px) {

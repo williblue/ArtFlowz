@@ -17,6 +17,24 @@ import {
   CreatorImg,
 } from "./styles"
 import { create } from "ipfs-http-client"
+import { useUser } from "@components/user/UserProvider"
+import { toast } from "react-toastify"
+import {
+  query,
+  send,
+  transaction,
+  args,
+  arg,
+  payer,
+  proposer,
+  authorizations,
+  limit,
+  authz,
+  decode,
+  tx,
+} from "@onflow/fcl"
+import * as t from "@onflow/types"
+import { toastStatus } from "../../../framework/toastStatus"
 
 type Props = {
   isOpen: boolean
@@ -62,8 +80,7 @@ const CreateCommissionModal: FC<Props> = ({
     console.log("cid changed: ", cid)
   }, [cid])
 
-  // const infuraUrl = `https://ipfs.infura.io:5001/api/v0/?arg=${projectId}`
-  // const ipfs = create({ url: infuraUrl })
+  const { createCommission } = useUser()
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -79,7 +96,7 @@ const CreateCommissionModal: FC<Props> = ({
     }
     // Submit commission request
     onClose()
-    //todo: add createCommission transaction
+    createCommission(creatorAddress, offerAmount, genre, nsfw, notes, link, cid)
   }
 
   const handleFileDrop = (event: React.DragEvent<HTMLInputElement>) => {
@@ -214,7 +231,22 @@ const CreateCommissionModal: FC<Props> = ({
             />
             I agree to the terms and conditions.
           </CheckBoxWrapper>
-          <SubmitButton type="submit">Confirm</SubmitButton>
+          <SubmitButton
+            // onClick={() =>
+            //   createCommission(
+            //     creatorAddress,
+            //     offerAmount,
+            //     genre,
+            //     nsfw,
+            //     notes,
+            //     link,
+            //     cid,
+            //   )
+            // }
+            type="submit"
+          >
+            Confirm
+          </SubmitButton>
         </form>
       </ModalContainer>
     </ModalOverlay>

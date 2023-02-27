@@ -8,8 +8,8 @@ const initialState = {}
 const Context = createContext<State | any>(initialState)
 
 interface Props {
-    children: any;
-  }
+  children: any
+}
 
 const AuthProvder: FC<Props> = ({ children }) => {
   const [user, loggedIn, logIn, logOut]: any = useCurrentUser()

@@ -5,11 +5,13 @@ import Head from "next/head"
 import { useRouter } from "next/dist/client/router"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
+import Navbar from "../Navbar"
 
 //Configure FCL
 fcl
   .config()
   .put("accessNode.api", "https://access-testnet.onflow.org")
+  // .put("accessNode.api", "https://rest-testnet.onflow.org")
   .put("discovery.wallet", "https://flow-wallet-testnet.blocto.app/authn")
   .put("discovery.wallet.method", "HTTP/POST")
   .put("0xFungibleToken", "0x9a0766d93b6608b7")
@@ -27,6 +29,7 @@ interface Props {
 const Layout: FC<Props> = ({ children }) => {
   return (
     <>
+      <Navbar />
       <ToastContainer position="bottom-right" pauseOnFocusLoss={false} />
       <main>{children}</main>
       <Footer />
