@@ -51,6 +51,7 @@ const CreateCommissionModal: FC<Props> = ({
     }
     // Submit commission request
     onClose()
+    //todo: add createCommission transaction
   }
 
   return (
