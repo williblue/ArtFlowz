@@ -140,7 +140,14 @@ const CreateCommissionModal: FC<Props> = ({
                 accept="image/*, video/*"
                 onChange={handleFileChange}
               />
-              {previewUrl && <img src={previewUrl} alt="Preview" />}
+              {previewUrl && (
+                <img
+                  width={50}
+                  height={"auto"}
+                  src={previewUrl}
+                  alt="Preview"
+                />
+              )}
             </Column>
           </Row>
           <Label htmlFor="notes">Notes:</Label>
