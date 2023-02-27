@@ -65,7 +65,7 @@ const CreateCommissionModal: FC<Props> = ({
         <form onSubmit={handleSubmit}>
           <Row>
             <Column>
-              Genre:
+              <Label htmlFor="genre">Genre:</Label>
               <Select
                 id="genre"
                 value={genre}
@@ -77,15 +77,17 @@ const CreateCommissionModal: FC<Props> = ({
                 <option value="video">Video</option>
                 <option value="pfp">Profile Picture</option>
               </Select>
-              Offer amount (USD):
+              <Label htmlFor="offer-amount">Offer amount (USD):</Label>
               <Input
                 type="number"
+                id="offer-amount"
                 value={offerAmount}
                 onChange={(e) => setOfferAmount(e.target.value)}
                 required
               />
-              NSFW:
+              <Label htmlFor="nsfw">NSFW:</Label>
               <Select
+                id="nsfw"
                 value={nsfw.toString()}
                 onChange={(e) => setNsfw(e.target.value === "true")}
                 required
@@ -96,7 +98,7 @@ const CreateCommissionModal: FC<Props> = ({
               </Select>
             </Column>
             <Column>
-              <label htmlFor="genre-file">File Upload</label>
+              <Label htmlFor="genre-file">File Upload</Label>
               <UploadFile
                 type="file"
                 id="genre-file"
@@ -106,15 +108,17 @@ const CreateCommissionModal: FC<Props> = ({
               />
             </Column>
           </Row>
-          Notes:
+          <Label htmlFor="notes">Notes:</Label>
           <TextArea
+            id="notes"
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             required
           />
-          Link:
+          <Label htmlFor="link">Link:</Label>
           <Input
             type="url"
+            id="link"
             value={link}
             onChange={(e) => setLink(e.target.value)}
             required
@@ -122,11 +126,12 @@ const CreateCommissionModal: FC<Props> = ({
           <CheckBoxWrapper>
             <CheckBox
               type="checkbox"
+              id="agree"
               checked={agree}
               onChange={(e) => setAgree(e.target.checked)}
               required
             />
-            I agree to the terms and conditions.
+            <Label htmlFor="agree">I agree to the terms and conditions.</Label>
           </CheckBoxWrapper>
           <SubmitButton type="submit">Submit</SubmitButton>
         </form>
