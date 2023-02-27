@@ -13,40 +13,53 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   padding: 2rem 0rem;
-  @media (max-width: 1010px) {
-    flex-direction: column;
-    height: min-content;
-  }
   font-family: "Sinhala MN", Arial, sans-serif;
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* Creates two columns with equal width */
-  align-items: center; /* Vertically aligns the grid items */
-  background: linear-gradient(
-    to bottom,
-    #ffffff,
-    #d8cbed
-  ); /* Sets the linear gradient background color */
+
+  @media (min-width: 768px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
 `
 
 const HeroImage = styled.div`
-  background-image: url(${HeroImg.src}); /* Sets the image for the left column */
-  background-size: cover; /* Makes the image cover the entire column */
-  height: 800px; /* Sets the height of the column */
+  background-image: url(${HeroImg.src});
+  background-size: cover;
+  height: 50vh;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    height: 800px;
+  }
 `
 
 const HeroText = styled.div`
-  font-size: 80px;
+  font-size: 30px;
   color: #7539d4;
   font-weight: bold;
-  width: 75%;
+  width: 100%;
   line-height: 0.95;
-  letter-spacing: 4px;
-  padding-bottom: 40px;
-  padding-top: 300px;
+  letter-spacing: 2px;
+  padding: 2rem 1rem;
+
+  @media (min-width: 768px) {
+    font-size: 80px;
+    width: 75%;
+    padding-bottom: 40px;
+    padding-top: 300px;
+  }
 `
 
 const ButtonContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
 `
 
 const ButtonUnfilled = styled.button`
@@ -55,7 +68,7 @@ const ButtonUnfilled = styled.button`
   border-width: 2px;
   border-color: #802bdc;
   border-radius: 4px;
-  padding: 15px 50px;
+  padding: 1rem 2rem;
   margin-right: 10px;
   cursor: pointer;
   font-family: "Sinhala MN", Arial, sans-serif;
@@ -68,6 +81,11 @@ const ButtonUnfilled = styled.button`
     background-color: #af73f5;
     border-color: #af73f5;
     color: #fff;
+  }
+
+  @media (min-width: 768px) {
+    padding: 15px 50px;
+    margin-right: 20px;
   }
 `
 
