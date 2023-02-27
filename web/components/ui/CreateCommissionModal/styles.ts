@@ -76,7 +76,7 @@ export const TextArea = styled.textarea`
 export const CheckBoxWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  margin: 10px 0;
 `
 
 export const CheckBox = styled.input`
@@ -108,4 +108,10 @@ export const Column = styled.div`
 export const UploadFile = styled.input`
   margin-top: 5px;
   margin-bottom: 5px;
+`
+export const CreatorImg = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  padding-right: 8px;
 `

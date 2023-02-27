@@ -178,7 +178,13 @@ const Hero: FC = () => {
           <Button onClick={handleButtonClick}>NEW REQEUST</Button>
         </ButtonContainer>
       </RightColumn>
-      <CreateCommissionModal isOpen={showModal} onClose={handleModalClose} />
+      <CreateCommissionModal
+        isOpen={showModal}
+        onClose={handleModalClose}
+        creatorName={"dalle"}
+        creatorImage={DalleImg.src}
+        creatorAddress={"0x"}
+      />
     </Container>
   )
 }

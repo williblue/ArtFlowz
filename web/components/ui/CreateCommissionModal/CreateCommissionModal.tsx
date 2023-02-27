@@ -14,6 +14,7 @@ import {
   Row,
   Column,
   UploadFile,
+  CreatorImg,
 } from "./styles"
 
 type Props = {
@@ -21,6 +22,7 @@ type Props = {
   onClose: () => void
   creatorName: string
   creatorImage: string
+  creatorAddress: string
 }
 
 const CreateCommissionModal: FC<Props> = ({
@@ -28,6 +30,7 @@ const CreateCommissionModal: FC<Props> = ({
   onClose,
   creatorName,
   creatorImage,
+  creatorAddress,
 }) => {
   const [genre, setGenre] = useState("")
   const [offerAmount, setOfferAmount] = useState("")
@@ -36,6 +39,7 @@ const CreateCommissionModal: FC<Props> = ({
   const [link, setLink] = useState("")
   const [agree, setAgree] = useState(false)
   const [genreFile, setGenreFile] = useState<File | undefined>(undefined)
+  const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined)
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -54,6 +58,33 @@ const CreateCommissionModal: FC<Props> = ({
     //todo: add createCommission transaction
   }
 
+  const handleFileDrop = (event: React.DragEvent<HTMLInputElement>) => {
+    event.preventDefault()
+    const file = event.dataTransfer.files[0]
+    readFile(file)
+  }
+
+  const handleDragOver = (event: React.DragEvent<HTMLInputElement>) => {
+    event.preventDefault()
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    readFile(file)
+  }
+
+  const readFile = (file: File | undefined) => {
+    if (file) {
+      const reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        const base64data = reader.result
+        setGenreFile(file)
+        setPreviewUrl(base64data as string)
+      }
+    }
+  }
+
   return (
     <ModalOverlay isOpen={isOpen} onClick={handleOverlayClick}>
       <ModalContainer>
@@ -61,7 +92,7 @@ const CreateCommissionModal: FC<Props> = ({
         <Title>New Commission</Title>
         <p>Specify your commission preferences</p>
         <p>
-          Creator: <img src={creatorImage} alt={creatorName} /> {creatorName}
+          <CreatorImg src={creatorImage} alt={creatorName} /> @{creatorName}
         </p>
         <form onSubmit={handleSubmit}>
           <Row>
@@ -101,12 +132,15 @@ const CreateCommissionModal: FC<Props> = ({
             <Column>
               <Label htmlFor="genre-file">File Upload</Label>
               <UploadFile
+                onDrop={handleFileDrop}
+                onDragOver={handleDragOver}
                 type="file"
                 id="genre-file"
                 name="genre-file"
                 accept="image/*, video/*"
-                onChange={(e) => setGenreFile(e.target.files?.[0])}
+                onChange={handleFileChange}
               />
+              {previewUrl && <img src={previewUrl} alt="Preview" />}
             </Column>
           </Row>
           <Label htmlFor="notes">Notes:</Label>
@@ -132,7 +166,7 @@ const CreateCommissionModal: FC<Props> = ({
               onChange={(e) => setAgree(e.target.checked)}
               required
             />
-            <Label htmlFor="agree">I agree to the terms and conditions.</Label>
+            I agree to the terms and conditions.
           </CheckBoxWrapper>
           <SubmitButton type="submit">Confirm</SubmitButton>
         </form>
