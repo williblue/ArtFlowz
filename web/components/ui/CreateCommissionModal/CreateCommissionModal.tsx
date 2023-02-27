@@ -133,7 +133,7 @@ const CreateCommissionModal: FC<Props> = ({
             />
             <Label htmlFor="agree">I agree to the terms and conditions.</Label>
           </CheckBoxWrapper>
-          <SubmitButton type="submit">Submit</SubmitButton>
+          <SubmitButton type="submit">Confirm</SubmitButton>
         </form>
       </ModalContainer>
     </ModalOverlay>
