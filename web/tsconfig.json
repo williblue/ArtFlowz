@@ -22,6 +22,6 @@
       "@framework/*": ["framework/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "components/user/UserProvider"],
+  "include": ["next-env.d.ts", "**/*.d.ts", "**/*.ts", "**/*.tsx", "**/*.js"],
   "exclude": ["node_modules"]
 }

@@ -1,6 +1,7 @@
 import { FC, createContext, useContext, useEffect } from "react"
 import useCurrentUser from "framework/hooks/use-current-user.hook"
 import useArtFlowz from "@framework/hooks/use-art-flowz.hook"
+import useProfile from "@framework/hooks/use-profile.hook"
 
 export interface State {}
 
@@ -14,6 +15,8 @@ interface Props {
 
 const UserProvider: FC<Props> = ({ children }) => {
   const [user, address]: any = useCurrentUser()
+
+  const { createCreator, getAllProfiles, allProfiles } = useProfile()
 
   const {
     createCommission,
@@ -37,6 +40,9 @@ const UserProvider: FC<Props> = ({ children }) => {
         rejectCommission,
         completeCommission,
         mintCommission,
+        createCreator,
+        getAllProfiles,
+        allProfiles,
       }}
     >
       {children}
