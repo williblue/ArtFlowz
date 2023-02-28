@@ -480,7 +480,6 @@ export default function useArtFlowz() {
     commissionID: any,
     name: any,
     description: any,
-    commissionedArtPiece: any,
     onClose: any,
     closeParent: any,
   ) => {
@@ -494,7 +493,7 @@ export default function useArtFlowz() {
         import NonFungibleToken from 0xNonFungibleToken
         import MetadataViews from 0xMetadataViews
 
-        transaction(id: UInt64, name: String, description: String, image: String) {
+        transaction(id: UInt64, name: String, description: String) {
 
             prepare(acct: AuthAccount) {
 
@@ -519,7 +518,7 @@ export default function useArtFlowz() {
                         
 
                 //Mint
-                let artPiece <- commission.mint(name: name, description: description, image: image)
+                let artPiece <- commission.mint(name: name, description: description, image: commission.getCommissionedArtPiece()!)
 
                 receiverRef.deposit(token: <-artPiece)
 
@@ -531,7 +530,6 @@ export default function useArtFlowz() {
           arg(commissionID, t.UInt64),
           arg(name, t.String),
           arg(description, t.String),
-          arg(commissionedArtPiece, t.String),
         ]),
         payer(authz),
         proposer(authz),

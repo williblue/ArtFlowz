@@ -2,6 +2,7 @@ import { useUser } from "@components/user/UserProvider"
 import { FC, useState } from "react"
 import styled from "styled-components"
 import CompleteModal from "../CompleteModal"
+import MintModal from "../MintModal"
 
 type Props = {
   isOpen: boolean
@@ -178,6 +179,7 @@ const CommissionViewModal: FC<Props> = ({
   asCreator,
 }) => {
   const [showModal, setShowModal] = useState(false)
+  const [mintModal, setMintModal] = useState(false)
 
   const handleModalClose = () => {
     setShowModal(false)
@@ -185,6 +187,14 @@ const CommissionViewModal: FC<Props> = ({
 
   const handleButtonClick = () => {
     setShowModal(true)
+  }
+
+  const handleMintModalClose = () => {
+    setMintModal(false)
+  }
+
+  const handleMintButtonClick = () => {
+    setMintModal(true)
   }
 
   const { cancelCommission, acceptCommission, rejectCommission } = useUser()
@@ -227,7 +237,9 @@ const CommissionViewModal: FC<Props> = ({
             />
             <ButtonWrapper>
               <DownloadButton onClick={handleDownload}>Download</DownloadButton>
-              <MintButton>Mint as NFT</MintButton>
+              <MintButton onClick={handleMintButtonClick}>
+                Mint as NFT
+              </MintButton>
             </ButtonWrapper>
           </CompleteWrapper>
         ) : (
@@ -320,6 +332,12 @@ const CommissionViewModal: FC<Props> = ({
       <CompleteModal
         isOpen={showModal}
         onClose={handleModalClose}
+        selected={selected}
+        closeParent={onClose}
+      />
+      <MintModal
+        isOpen={mintModal}
+        onClose={handleMintModalClose}
         selected={selected}
         closeParent={onClose}
       />

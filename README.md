@@ -20,8 +20,9 @@ CreatorProfile.cdc: Manage commissions
 ✅ Create Commission  
 ✅ Cancel Commission  
 ✅ Accept Commission (Creator)  
-✅ Reject Commission (Creator)
-✅ Complete Commission (Creator)
+✅ Reject Commission (Creator)  
+✅ Complete Commission (Creator)  
+✅ Mint Commission as NFT
 
 ### Scripts
 

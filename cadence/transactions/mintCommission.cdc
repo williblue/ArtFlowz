@@ -28,7 +28,7 @@ transaction(id: UInt64, name: String, description: String, image: String) {
                 
 
         //Mint
-        let artPiece <- commission.mint(name: name, description: description, image: image)
+        let artPiece <- commission.mint(name: name, description: description, image: commission.getCommissionedArtPiece()!)
 
         receiverRef.deposit(token: <-artPiece)
 
