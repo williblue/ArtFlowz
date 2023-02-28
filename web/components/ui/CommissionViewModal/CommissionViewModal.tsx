@@ -6,6 +6,7 @@ type Props = {
   isOpen: boolean
   onClose: () => void
   selected: any
+  asCreator: boolean
 }
 
 const ModalOverlay = styled.div<{ isOpen: boolean }>`
@@ -90,8 +91,45 @@ const Button = styled.button`
   }
 `
 
-const CommissionViewModal: FC<Props> = ({ isOpen, onClose, selected }) => {
-  const { cancelCommission } = useUser()
+const AcceptButton = styled.button`
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  position: absolute;
+  bottom: 10px;
+  right: 100px;
+  &:hover {
+    background-color: DarkGreen;
+  }
+`
+
+const CompleteButton = styled.button`
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  &:hover {
+    background-color: DarkGreen;
+  }
+`
+
+const CommissionViewModal: FC<Props> = ({
+  isOpen,
+  onClose,
+  selected,
+  asCreator,
+}) => {
+  const { cancelCommission, acceptCommission, rejectCommission } = useUser()
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -115,8 +153,14 @@ const CommissionViewModal: FC<Props> = ({ isOpen, onClose, selected }) => {
             <CommissionValue>
               ${parseFloat(selected?.commissionAmount).toFixed(2)}
             </CommissionValue>
-            <CommissionLabel>Creator:</CommissionLabel>
-            <CommissionValue>{selected?.creatorAddress}</CommissionValue>
+            <CommissionLabel>
+              {asCreator ? "Commissioner" : "Creator:"}
+            </CommissionLabel>
+            <CommissionValue>
+              {asCreator
+                ? selected?.commissionerAddress
+                : selected?.creatorAddress}
+            </CommissionValue>
             <CommissionLabel>Status:</CommissionLabel>
             <CommissionValue>{selected?.status}</CommissionValue>
             <CommissionLabel>Genre:</CommissionLabel>
@@ -129,11 +173,44 @@ const CommissionViewModal: FC<Props> = ({ isOpen, onClose, selected }) => {
             <CommissionValue>{selected?.link}</CommissionValue>
           </CommissionInfo>
         </Wrapper>
-        <Button
-          onClick={() => cancelCommission(selected?.commissionID, onClose)}
-        >
-          Cancel
-        </Button>
+        {asCreator ? (
+          <>
+            {selected?.status !== "accepted" ? (
+              <div>
+                <AcceptButton
+                  onClick={() =>
+                    acceptCommission(
+                      selected?.commissionerAddress,
+                      selected?.commissionID,
+                      onClose,
+                    )
+                  }
+                >
+                  Accept
+                </AcceptButton>
+                <Button
+                  onClick={() =>
+                    rejectCommission(
+                      selected?.commissionerAddress,
+                      selected?.commissionID,
+                      onClose,
+                    )
+                  }
+                >
+                  Reject
+                </Button>
+              </div>
+            ) : (
+              <CompleteButton>Complete</CompleteButton>
+            )}
+          </>
+        ) : (
+          <Button
+            onClick={() => cancelCommission(selected?.commissionID, onClose)}
+          >
+            {selected?.status === "rejected" ? "Remove" : "Cancel"}
+          </Button>
+        )}
       </ModalContainer>
     </ModalOverlay>
   )

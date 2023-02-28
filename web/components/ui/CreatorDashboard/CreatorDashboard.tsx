@@ -1,9 +1,11 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import styled from "styled-components"
 import BannerImg from "/public/dashboardbanner.png"
 import DalleImg from "/public/dalle.jpg"
 import CreatorsTable from "../CreatorsTable"
 import { useUser } from "@components/user/UserProvider"
+import CommissionViewModal from "../CommissionViewModal"
+import { useAuth } from "@components/auth/AuthProvider"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -116,6 +118,17 @@ const H2 = styled.h2`
 
 const CreatorDashboard: FC = () => {
   const { allCommissions } = useUser()
+  const [showModal, setShowModal] = useState(false)
+  const [selected, select] = useState()
+  const { user } = useAuth()
+
+  const handleModalClose = () => {
+    setShowModal(false)
+  }
+
+  const handleButtonClick = () => {
+    setShowModal(true)
+  }
   return (
     <Container>
       <BannerImage />
@@ -135,14 +148,44 @@ const CreatorDashboard: FC = () => {
           <DashboardHeader>Dashboard</DashboardHeader>
           <H2>New Requests</H2>
           <CreatorsTable
-            data={allCommissions}
-            select={undefined}
-            handleButtonClick={function (): void {
-              throw new Error("Function not implemented.")
-            }}
+            data={allCommissions?.filter((item: any) => {
+              return (
+                item.status === "pending" && item.creatorAddress === user?.addr
+              )
+            })}
+            select={select}
+            handleButtonClick={handleButtonClick}
           />
+          {/* todo: if I have enough time I should add artwork design instead of the table */}
+          {allCommissions?.filter((item: any) => {
+            return (
+              item.status === "accepted" && item.creatorAddress === user?.addr
+            )
+          }).length > 0 ? (
+            <>
+              <H2>Ongoing Commissions</H2>
+              <CreatorsTable
+                data={allCommissions?.filter((item: any) => {
+                  return (
+                    item.status === "accepted" &&
+                    item.creatorAddress === user?.addr
+                  )
+                })}
+                select={select}
+                handleButtonClick={handleButtonClick}
+              />
+            </>
+          ) : (
+            <></>
+          )}
         </DashboardHeaderContainer>
       </Wrapper>
+      <CommissionViewModal
+        isOpen={showModal}
+        onClose={handleModalClose}
+        selected={selected}
+        asCreator={true}
+      />
     </Container>
   )
 }

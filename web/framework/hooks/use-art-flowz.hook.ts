@@ -234,10 +234,157 @@ export default function useArtFlowz() {
     }
   }
 
+  const acceptCommission = async (
+    commissionerAddress: any,
+    commissionID: any,
+    onClose: any,
+  ) => {
+    const id = toast.loading("Initializing...")
+
+    try {
+      const res = await send([
+        transaction(`
+        import ArtFlowz from 0xArtFlowz
+        import CreatorProfile from 0xCreatorProfile
+
+        transaction(commissionerAddress: Address, id: UInt64) {
+
+            prepare(acct: AuthAccount) {
+                //Get Collection
+                let collectionRef = getAccount(commissionerAddress).getCapability(ArtFlowz.CollectionPublicPath)
+                                                .borrow<&{ArtFlowz.CommissionCollectionPublic}>()??
+                                                                                panic("Can't get commission collection!")
+
+                //Get commission
+                let commission = collectionRef.borrowCommission(id: id)??
+                                                                        panic("Can't get commission!") 
+
+                //Create CreatorManager
+                if acct.borrow<&CreatorProfile.CreatorManager>(from: CreatorProfile.CreatorManagerStoragePath) == nil {
+                    acct.save(<- CreatorProfile.createCreatorManager(), to: CreatorProfile.CreatorManagerStoragePath)
+                }
+                let creatorManager = acct.borrow<&CreatorProfile.CreatorManager>(from: CreatorProfile.CreatorManagerStoragePath)!
+                
+                // Register creator
+                CreatorProfile.registerCreator(creatorManager: creatorManager)
+
+                commission.accept(creatorManager: creatorManager)
+            }
+
+        }
+        `),
+        args([
+          arg(commissionerAddress, t.Address),
+          arg(commissionID, t.UInt64),
+        ]),
+        payer(authz),
+        proposer(authz),
+        authorizations([authz]),
+        limit(9999),
+      ]).then(decode)
+      tx(res).subscribe((res: any) => {
+        toastStatus(id, res.status)
+      })
+      await tx(res)
+        .onceSealed()
+        .then((result: any) => {
+          toast.update(id, {
+            render: "Transaction Sealed",
+            type: "success",
+            isLoading: false,
+            autoClose: 5000,
+          })
+        })
+      getAllCommissions()
+      onClose()
+    } catch (err) {
+      toast.update(id, {
+        render: "Error, try again later...",
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      })
+      console.log(err)
+    }
+  }
+
+  const rejectCommission = async (
+    commissionerAddress: any,
+    commissionID: any,
+    onClose: any,
+  ) => {
+    const id = toast.loading("Initializing...")
+
+    try {
+      const res = await send([
+        transaction(`
+        import ArtFlowz from 0xArtFlowz
+        import CreatorProfile from 0xCreatorProfile
+
+        transaction(commissionerAddress: Address, id: UInt64) {
+
+            prepare(acct: AuthAccount) {
+                //Get Collection
+                let collectionRef = getAccount(commissionerAddress).getCapability(ArtFlowz.CollectionPublicPath)
+                                                .borrow<&{ArtFlowz.CommissionCollectionPublic}>()??
+                                                                                panic("Can't get commission collection!")
+
+                //Get commission
+                let commission = collectionRef.borrowCommission(id: id)??
+                                                                        panic("Can't get commission!") 
+
+                //Create CreatorManager
+                if acct.borrow<&CreatorProfile.CreatorManager>(from: CreatorProfile.CreatorManagerStoragePath) == nil {
+                    acct.save(<- CreatorProfile.createCreatorManager(), to: CreatorProfile.CreatorManagerStoragePath)
+                }
+                let creatorManager = acct.borrow<&CreatorProfile.CreatorManager>(from: CreatorProfile.CreatorManagerStoragePath)!
+
+                commission.reject(creatorManager: creatorManager)
+            }
+
+        }
+        `),
+        args([
+          arg(commissionerAddress, t.Address),
+          arg(commissionID, t.UInt64),
+        ]),
+        payer(authz),
+        proposer(authz),
+        authorizations([authz]),
+        limit(9999),
+      ]).then(decode)
+      tx(res).subscribe((res: any) => {
+        toastStatus(id, res.status)
+      })
+      await tx(res)
+        .onceSealed()
+        .then((result: any) => {
+          toast.update(id, {
+            render: "Transaction Sealed",
+            type: "success",
+            isLoading: false,
+            autoClose: 5000,
+          })
+        })
+      getAllCommissions()
+      onClose()
+    } catch (err) {
+      toast.update(id, {
+        render: "Error, try again later...",
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      })
+      console.log(err)
+    }
+  }
+
   return {
     createCommission,
     allCommissions,
     getAllCommissions,
     cancelCommission,
+    acceptCommission,
+    rejectCommission,
   }
 }

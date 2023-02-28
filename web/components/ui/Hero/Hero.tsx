@@ -215,7 +215,7 @@ const Hero: FC = () => {
         onClose={handleModalClose}
         creatorName={"dalle"}
         creatorImage={DalleImg.src}
-        creatorAddress={"0x"}
+        creatorAddress={"0xe1cfe1ba997b5aac"}
         handleThankYouModalOpen={handleThankYouModalOpen}
       />
       <ThankYouModal

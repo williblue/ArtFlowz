@@ -19,3 +19,5 @@ CreatorProfile.cdc
 ✅ Create Commission
 ✅ View Commissions
 ✅ Cancel Commission
+✅ Accept Commission (Creator)
+✅ Reject Commission (Creator)

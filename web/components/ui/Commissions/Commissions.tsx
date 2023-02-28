@@ -4,6 +4,7 @@ import React, { FC, useState } from "react"
 import styled from "styled-components"
 import CommissionTable from "../CommissionTable"
 import CommissionViewModal from "../CommissionViewModal"
+import Link from "next/link"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -103,26 +104,47 @@ const Hero: FC = () => {
     <Container>
       {loggedIn ? (
         <Wrapper>
-          <Title>Ongoing Commissions</Title>
-          <CommissionTable
-            data={allCommissions?.filter(
-              (item: any) =>
-                item.status !== "completed" &&
-                item.commissionerAddress === user?.addr,
-            )}
-            select={select}
-            handleButtonClick={handleButtonClick}
-          />
-          <Title>Completed Commissions</Title>
-          <CommissionTable
-            data={allCommissions?.filter(
-              (item: any) =>
-                item.status === "completed" &&
-                item.commissionerAddress === user?.addr,
-            )}
-            select={select}
-            handleButtonClick={handleButtonClick}
-          />
+          {allCommissions?.filter(
+            (item: any) =>
+              item.status !== "completed" &&
+              item.commissionerAddress === user?.addr,
+          ).length == 0 &&
+          allCommissions?.filter(
+            (item: any) =>
+              item.status === "completed" &&
+              item.commissionerAddress === user?.addr,
+          ) == 0 ? (
+            <>
+              <Title>No commissions found</Title>
+
+              <Link href="/">
+                <Button>Request a Commission!</Button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Title>Ongoing Commissions</Title>
+              <CommissionTable
+                data={allCommissions?.filter(
+                  (item: any) =>
+                    item.status !== "completed" &&
+                    item.commissionerAddress === user?.addr,
+                )}
+                select={select}
+                handleButtonClick={handleButtonClick}
+              />
+              <Title>Completed Commissions</Title>
+              <CommissionTable
+                data={allCommissions?.filter(
+                  (item: any) =>
+                    item.status === "completed" &&
+                    item.commissionerAddress === user?.addr,
+                )}
+                select={select}
+                handleButtonClick={handleButtonClick}
+              />
+            </>
+          )}
         </Wrapper>
       ) : (
         <Button onClick={() => logIn()}>Connect Wallet</Button>
@@ -132,6 +154,7 @@ const Hero: FC = () => {
         isOpen={showModal}
         onClose={handleModalClose}
         selected={selected}
+        asCreator={false}
       />
     </Container>
   )
