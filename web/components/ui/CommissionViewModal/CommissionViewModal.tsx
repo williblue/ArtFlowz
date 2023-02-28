@@ -1,3 +1,4 @@
+import { useUser } from "@components/user/UserProvider"
 import { FC } from "react"
 import styled from "styled-components"
 
@@ -84,9 +85,14 @@ const Button = styled.button`
   position: absolute;
   bottom: 10px;
   right: 10px;
+  &:hover {
+    background-color: DarkRed;
+  }
 `
 
 const CommissionViewModal: FC<Props> = ({ isOpen, onClose, selected }) => {
+  const { cancelCommission } = useUser()
+
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose()
@@ -123,7 +129,11 @@ const CommissionViewModal: FC<Props> = ({ isOpen, onClose, selected }) => {
             <CommissionValue>{selected?.link}</CommissionValue>
           </CommissionInfo>
         </Wrapper>
-        <Button>Cancel</Button>
+        <Button
+          onClick={() => cancelCommission(selected?.commissionID, onClose)}
+        >
+          Cancel
+        </Button>
       </ModalContainer>
     </ModalOverlay>
   )

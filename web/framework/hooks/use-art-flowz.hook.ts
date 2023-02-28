@@ -181,5 +181,63 @@ export default function useArtFlowz() {
     }
   }
 
-  return { createCommission, allCommissions, getAllCommissions }
+  const cancelCommission = async (commissionID: any, onClose: any) => {
+    const id = toast.loading("Initializing...")
+
+    try {
+      const res = await send([
+        transaction(`
+        import ArtFlowz from 0xArtFlowz
+
+        transaction(id: UInt64) {
+
+            prepare(acct: AuthAccount) {
+
+                //Get Commission Collection
+                let commissionCollectionRef = acct.borrow<&ArtFlowz.CommissionCollection>(from: ArtFlowz.CollectionStoragePath)??
+                                                                                panic("Can't get commission collection!")
+
+                commissionCollectionRef.cancelCommission(id: id)
+            }
+
+        }
+        `),
+        args([arg(commissionID, t.UInt64)]),
+        payer(authz),
+        proposer(authz),
+        authorizations([authz]),
+        limit(9999),
+      ]).then(decode)
+      tx(res).subscribe((res: any) => {
+        toastStatus(id, res.status)
+      })
+      await tx(res)
+        .onceSealed()
+        .then((result: any) => {
+          toast.update(id, {
+            render: "Transaction Sealed",
+            type: "success",
+            isLoading: false,
+            autoClose: 5000,
+          })
+        })
+      getAllCommissions()
+      onClose()
+    } catch (err) {
+      toast.update(id, {
+        render: "Error, try again later...",
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      })
+      console.log(err)
+    }
+  }
+
+  return {
+    createCommission,
+    allCommissions,
+    getAllCommissions,
+    cancelCommission,
+  }
 }

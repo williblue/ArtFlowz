@@ -15,7 +15,12 @@ interface Props {
 const UserProvider: FC<Props> = ({ children }) => {
   const [user, address]: any = useCurrentUser()
 
-  const { createCommission, allCommissions, getAllCommissions } = useArtFlowz()
+  const {
+    createCommission,
+    allCommissions,
+    getAllCommissions,
+    cancelCommission,
+  } = useArtFlowz()
 
   return (
     <Context.Provider
@@ -23,6 +28,7 @@ const UserProvider: FC<Props> = ({ children }) => {
         createCommission,
         allCommissions,
         getAllCommissions,
+        cancelCommission,
       }}
     >
       {children}
