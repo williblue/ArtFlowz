@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect, useState } from "react"
 import {
   ModalOverlay,
   ModalContainer,
@@ -24,27 +24,35 @@ const AccountCreatedModal: FC<Props> = ({
   creatorName,
   creatorImage,
 }) => {
+  const [twitterShareLink, setTwitterShareLink] = useState("")
+  const [telegramShareLink, setTelegramShareLink] = useState("")
+
+  useEffect(() => {
+    const message = "I just created an account at ArtFlowz check it out!"
+
+    // Generate Twitter share link
+    const twitterLink = `https://twitter.com/intent/tweet?${queryString.stringify(
+      {
+        text: message,
+        url: window?.location.href,
+      },
+    )}`
+
+    // Generate Telegram share link
+    const telegramLink = `https://t.me/share/url?${queryString.stringify({
+      text: message,
+      url: window?.location.href,
+    })}`
+
+    setTwitterShareLink(twitterLink)
+    setTelegramShareLink(telegramLink)
+  }, [])
+
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose()
     }
   }
-
-  const message = "I just created an account at ArtFlowz check it out!"
-
-  // Generate Twitter share link
-  const twitterShareLink = `https://twitter.com/intent/tweet?${queryString.stringify(
-    {
-      text: message,
-      url: window.location.href,
-    },
-  )}`
-
-  // Generate Telegram share link
-  const telegramShareLink = `https://t.me/share/url?${queryString.stringify({
-    text: message,
-    url: window.location.href,
-  })}`
 
   return (
     <ModalOverlay isOpen={isOpen} onClick={handleOverlayClick}>

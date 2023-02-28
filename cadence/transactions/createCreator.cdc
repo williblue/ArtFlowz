@@ -37,7 +37,7 @@ import CreatorProfile from 0xCreatorProfile
             var updated=false
             let profileCap = account.getCapability<&{Profile.Public}>(Profile.publicPath)
             if !profileCap.check() {
-              let profile <-Profile.createUser(name:name, createdAt: "Basic Beasts")
+              let profile <-Profile.createUser(name:name, createdAt: "ArtFlowz")
               account.save(<-profile, to: Profile.storagePath)
               account.link<&Profile.User{Profile.Public}>(Profile.publicPath, target: Profile.storagePath)
               account.link<&{FungibleToken.Receiver}>(Profile.publicReceiverPath, target: Profile.storagePath)

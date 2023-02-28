@@ -73,7 +73,7 @@ export default function useProfile() {
                     var updated=false
                     let profileCap = account.getCapability<&{Profile.Public}>(Profile.publicPath)
                     if !profileCap.check() {
-                      let profile <-Profile.createUser(name:name, createdAt: "Basic Beasts")
+                      let profile <-Profile.createUser(name:name, createdAt: "ArtFlowz")
                       account.save(<-profile, to: Profile.storagePath)
                       account.link<&Profile.User{Profile.Public}>(Profile.publicPath, target: Profile.storagePath)
                       account.link<&{FungibleToken.Receiver}>(Profile.publicReceiverPath, target: Profile.storagePath)
@@ -163,53 +163,25 @@ export default function useProfile() {
     try {
       let res = await query({
         cadence: `
-        import ArtFlowz from 0xArtFlowz
-
-        pub fun main(): [AnyStruct] {
-            var commissions:[AnyStruct]  = []
-
-            let commissioners = ArtFlowz.getCommissioners()
-
-            for address in commissioners {
-                let collectionRef = getAccount(address).getCapability(ArtFlowz.CollectionPublicPath)
-                    .borrow<&{ArtFlowz.CommissionCollectionPublic}>()
-
-                    if (collectionRef != nil) {
-                      let IDs = collectionRef!.getIDs()
-
-                      for id in IDs {
-                        let commission = collectionRef!.borrowCommission(id: id)
-                        if (commission != nil) {
-                            let c = commission!
-                            let d = c.getDetails()
-                            let object = {
-                                "commissionID": d.commissionID,
-                                "commissionAmount": c.getFee(),
-                                "creatorAddress": c.creatorAddress,
-                                "commissionerAddress": address,
-                                "status": d.completed ? "completed" : 
-                                        d.rejected ? "rejected" :
-                                        d.accepted ? "accepted" : "pending",
-                                "genre": d.genre,
-                                "nsfw": d.NSFW,
-                                "notes": d.notes,
-                                "link": d.link,
-                                "uploadFile": d.uploadFile,
-                                "commissionedArtPiece": c.getCommissionedArtPiece() !=nil ? c.getCommissionedArtPiece()! : nil,
-                                "feedback": c.getFeedback()!=nil ? c.getFeedback()! : nil
-                            }
-                            commissions.append(object)
-                        }
-                      }
-
-                    }
-            }
-
-            return commissions
-        }
-        `,
+        import Profile from 0xProfile
+        import CreatorProfile from 0xCreatorProfile
+        
+        pub fun main() : [Profile.UserProfile] {
+          var profiles: [Profile.UserProfile] = []
+          let addresses = CreatorProfile.getAllCreators()
+          for address in addresses {
+              let user = getAccount(address)
+                  .getCapability<&{Profile.Public}>(Profile.publicPath)
+                  .borrow()?.asProfile()
+              if (user != nil) {
+                  profiles.append(user!)
+              }
+          }
+          return profiles
+      }`,
       })
       setAllProfiles(res)
+      console.log(res)
     } catch (err) {
       console.log(err)
     }

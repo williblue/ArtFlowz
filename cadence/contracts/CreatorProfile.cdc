@@ -23,6 +23,10 @@ pub contract CreatorProfile {
         return <- create self.CreatorManager()
     }
 
+    pub fun getAllCreators(): [Address] {
+        return self.creators
+    }
+
     init() {
         self.CreatorManagerStoragePath = /storage/CreatorProfileCreatorManager
         self.CreatorManagerPrivatePath = /private/CreatorProfileCreatorManager
