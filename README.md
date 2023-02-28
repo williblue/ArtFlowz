@@ -15,3 +15,5 @@ CreatorProfile.cdc
 ### Transactions
 
 ✅ Create Commission
+✅ View Commissions
+✅ Cancel Commission
