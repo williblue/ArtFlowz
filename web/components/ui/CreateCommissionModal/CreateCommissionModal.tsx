@@ -175,7 +175,7 @@ const CreateCommissionModal: FC<Props> = ({
                 <option value="video">Video</option>
                 <option value="pfp">Profile Picture</option>
               </Select>
-              <Label htmlFor="offer-amount">Offer amount (USD):</Label>
+              <Label htmlFor="offer-amount">Offer amount (USDC):</Label>
               <Input
                 type="number"
                 id="offer-amount"

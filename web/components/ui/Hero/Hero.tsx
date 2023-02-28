@@ -14,6 +14,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
   font-family: "Sinhala MN", Arial, sans-serif;
+  background: linear-gradient(
+    to bottom,
+    #ffffff,
+    #d8cbed
+  ); /* Sets the linear gradient background color */
 
   @media (min-width: 768px) {
     display: grid;
