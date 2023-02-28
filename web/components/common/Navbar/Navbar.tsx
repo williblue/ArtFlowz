@@ -44,7 +44,7 @@ const CtaButton = styled.a`
   background-color: #222;
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
 
   &:hover {

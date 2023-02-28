@@ -4,6 +4,7 @@ import HeroImg from "/public/dalleart.png"
 import DalleImg from "/public/dalle.jpg"
 import CreateCommissionModal from "../CreateCommissionModal"
 import ThankYouModal from "../ThankYouModal"
+import Link from "next/link"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -206,7 +207,9 @@ const Hero: FC = () => {
         </Wrapper>
         <HeroText>Art made personal.</HeroText>
         <ButtonContainer>
-          <ButtonUnfilled>VIEW PROFILE</ButtonUnfilled>
+          <Link href="/dashboard">
+            <ButtonUnfilled>VIEW PROFILE</ButtonUnfilled>
+          </Link>
           <Button onClick={handleButtonClick}>NEW REQEUST</Button>
         </ButtonContainer>
       </RightColumn>

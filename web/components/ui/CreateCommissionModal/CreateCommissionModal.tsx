@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import {
   ModalOverlay,
   ModalContainer,
@@ -18,23 +18,6 @@ import {
 } from "./styles"
 import { create } from "ipfs-http-client"
 import { useUser } from "@components/user/UserProvider"
-import { toast } from "react-toastify"
-import {
-  query,
-  send,
-  transaction,
-  args,
-  arg,
-  payer,
-  proposer,
-  authorizations,
-  limit,
-  authz,
-  decode,
-  tx,
-} from "@onflow/fcl"
-import * as t from "@onflow/types"
-import { toastStatus } from "../../../framework/toastStatus"
 
 type Props = {
   isOpen: boolean
@@ -77,10 +60,6 @@ const CreateCommissionModal: FC<Props> = ({
       authorization: auth,
     },
   })
-
-  useEffect(() => {
-    console.log("cid changed: ", cid)
-  }, [cid])
 
   const { createCommission } = useUser()
 
@@ -206,14 +185,6 @@ const CreateCommissionModal: FC<Props> = ({
                 accept="image/*, video/*"
                 onChange={handleFileChange}
               />
-              {/* {previewUrl && (
-                <img
-                  width={50}
-                  height={"auto"}
-                  src={previewUrl}
-                  alt="Preview"
-                />
-              )} */}
               {fileUrl && <img src={fileUrl} width="50px" />}
             </Column>
           </Row>

@@ -1,6 +1,7 @@
 import { useUser } from "@components/user/UserProvider"
-import { FC } from "react"
+import { FC, useState } from "react"
 import styled from "styled-components"
+import CompleteModal from "../CompleteModal"
 
 type Props = {
   isOpen: boolean
@@ -129,6 +130,16 @@ const CommissionViewModal: FC<Props> = ({
   selected,
   asCreator,
 }) => {
+  const [showModal, setShowModal] = useState(false)
+
+  const handleModalClose = () => {
+    setShowModal(false)
+  }
+
+  const handleButtonClick = () => {
+    setShowModal(true)
+  }
+
   const { cancelCommission, acceptCommission, rejectCommission } = useUser()
 
   const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -153,6 +164,12 @@ const CommissionViewModal: FC<Props> = ({
             <CommissionValue>
               ${parseFloat(selected?.commissionAmount).toFixed(2)}
             </CommissionValue>
+            {asCreator && (
+              <>
+                <CommissionLabel>Platform fee:</CommissionLabel>
+                <CommissionValue>2.5%</CommissionValue>
+              </>
+            )}
             <CommissionLabel>
               {asCreator ? "Commissioner" : "Creator:"}
             </CommissionLabel>
@@ -201,7 +218,9 @@ const CommissionViewModal: FC<Props> = ({
                 </Button>
               </div>
             ) : (
-              <CompleteButton>Complete</CompleteButton>
+              <CompleteButton onClick={handleButtonClick}>
+                Complete
+              </CompleteButton>
             )}
           </>
         ) : (
@@ -212,6 +231,12 @@ const CommissionViewModal: FC<Props> = ({
           </Button>
         )}
       </ModalContainer>
+      <CompleteModal
+        isOpen={showModal}
+        onClose={handleModalClose}
+        selected={selected}
+        closeParent={onClose}
+      />
     </ModalOverlay>
   )
 }

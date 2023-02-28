@@ -28,7 +28,7 @@ transaction(creatorAddress: Address,
             acct.link<&FiatToken.Vault{FungibleToken.Provider, FungibleToken.Balance}>(vaultRefPrivatePath, target: FiatToken.VaultStoragePath)
         }
         //Get the private USDC vault capability
-        let vaultRefCapability = acct.getCapability<&FiatToken.Vault{FungibleToken.Provider, FungibleToken.Balance}>(/private/FiatTokenArtFlowz)
+        let vaultRefCapability = acct.getCapability<&FiatToken.Vault{FungibleToken.Provider, FungibleToken.Balance}>(vaultRefPrivatePath)
         
         commissionCollectionRef.createCommission(
                                                 creatorAddress: creatorAddress, 

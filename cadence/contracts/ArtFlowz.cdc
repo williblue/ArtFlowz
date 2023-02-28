@@ -66,6 +66,7 @@ pub contract ArtFlowz {
             pre {
                 self.accepted: "Can't complete commission: Commission must first be accepted."
                 !self.rejected: "Can't complete commission: Commission has been rejected."
+                !self.completed: "Can't complete commission: Commission has already been completed."
             }
             self.completed = true
         }
@@ -190,6 +191,7 @@ pub contract ArtFlowz {
                 self.vaultRefCapability.borrow()!.balance >= self.fee: "Can't complete commission: Not enough USDC in commissioner's vault"
             }
 
+            self.details.setToCompleted()
             let payment <- self.vaultRefCapability.borrow()!.withdraw(amount: self.fee)
 
             // pay ArtFlowz platform
