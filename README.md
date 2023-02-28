@@ -4,9 +4,9 @@ Live demo: https://art-flowz.vercel.app/
 
 Testnet Contract Address: `0x6200fc836822f78c`
 
-ArtFlowz.cdc  
-ArtPiece.cdc - NFT  
-CreatorProfile.cdc
+ArtFlowz.cdc: Create commissions  
+ArtPiece.cdc: Mint a commmission as an NFT, the Artist receive 10% royalty  
+CreatorProfile.cdc: Manage commissions
 
 ### Flow & IPFS
 
