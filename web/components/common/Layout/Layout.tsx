@@ -22,9 +22,9 @@ fcl
   .put("0xFiatToken", "0xa983fecbed621163")
   .put("0xFlowToken", "0x7e60df042a9c0868")
   .put("0xFIND", "0x35717efbbce11c74")
-  .put("0xArtFlowz", "0x078d66c9d4e2a992")
-  .put("0xArtPiece", "0x078d66c9d4e2a992")
-  .put("0xCreatorProfile", "0x078d66c9d4e2a992")
+  .put("0xArtFlowz", "0x14b8514fff4263ba")
+  .put("0xArtPiece", "0x14b8514fff4263ba")
+  .put("0xCreatorProfile", "0x14b8514fff4263ba")
 
 interface Props {
   children: any

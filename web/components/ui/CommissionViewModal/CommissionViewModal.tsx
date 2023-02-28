@@ -124,6 +124,53 @@ const CompleteButton = styled.button`
   }
 `
 
+const CompleteWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+`
+
+const DownloadButton = styled.button`
+  background-color: transparent;
+  color: #7539d4;
+  border: solid 2px #7539d4;
+  padding: 10px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #7539d4;
+    color: white;
+  }
+`
+
+const MintButton = styled.button`
+  background-color: #7539d4;
+  color: white;
+  border: none;
+  padding: 10px 40px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #7539f4;
+
+    transform: scale(1.05);
+  }
+`
+
+const CommissionedArtPiece = styled.img`
+  margin-top: 20px;
+  border-radius: 5px;
+  margin: 20px auto;
+`
+
 const CommissionViewModal: FC<Props> = ({
   isOpen,
   onClose,
@@ -148,87 +195,126 @@ const CommissionViewModal: FC<Props> = ({
     }
   }
 
+  const handleDownload = async () => {
+    try {
+      const response = await fetch(
+        `https://artflowz.infura-ipfs.io/ipfs/${selected?.commissionedArtPiece}`,
+      )
+      const blob = await response.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement("a")
+      link.href = url
+      link.download = "commissioned-art-piece.png"
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <ModalOverlay isOpen={isOpen} onClick={handleOverlayClick}>
       <ModalContainer>
         <CloseButton onClick={onClose}>×</CloseButton>
-        <Wrapper>
-          <CommissionImage
-            src={`https://artflowz.infura-ipfs.io/ipfs/${selected?.uploadFile}`}
-            alt="Commission image"
-          />
-          <CommissionInfo>
-            <CommissionLabel>ID:</CommissionLabel>
-            <CommissionValue>{selected?.commissionID}</CommissionValue>
-            <CommissionLabel>Amount:</CommissionLabel>
-            <CommissionValue>
-              ${parseFloat(selected?.commissionAmount).toFixed(2)}
-            </CommissionValue>
-            {asCreator && (
-              <>
-                <CommissionLabel>Platform fee:</CommissionLabel>
-                <CommissionValue>2.5%</CommissionValue>
-              </>
-            )}
-            <CommissionLabel>
-              {asCreator ? "Commissioner" : "Creator:"}
-            </CommissionLabel>
-            <CommissionValue>
-              {asCreator
-                ? selected?.commissionerAddress
-                : selected?.creatorAddress}
-            </CommissionValue>
-            <CommissionLabel>Status:</CommissionLabel>
-            <CommissionValue>{selected?.status}</CommissionValue>
-            <CommissionLabel>Genre:</CommissionLabel>
-            <CommissionValue>{selected?.genre}</CommissionValue>
-            <CommissionLabel>NSFW:</CommissionLabel>
-            <CommissionValue>{selected?.nsfw ? "Yes" : "No"}</CommissionValue>
-            <CommissionLabel>Notes:</CommissionLabel>
-            <CommissionValue>{selected?.notes}</CommissionValue>
-            <CommissionLabel>Link:</CommissionLabel>
-            <CommissionValue>{selected?.link}</CommissionValue>
-          </CommissionInfo>
-        </Wrapper>
-        {asCreator ? (
+        {selected?.status === "completed" ? (
+          <CompleteWrapper>
+            <CommissionedArtPiece
+              width={400}
+              src={`https://artflowz.infura-ipfs.io/ipfs/${selected?.commissionedArtPiece}`}
+              alt="Commission image"
+            />
+            <ButtonWrapper>
+              <DownloadButton onClick={handleDownload}>Download</DownloadButton>
+              <MintButton>Mint as NFT</MintButton>
+            </ButtonWrapper>
+          </CompleteWrapper>
+        ) : (
           <>
-            {selected?.status !== "accepted" ? (
-              <div>
-                <AcceptButton
-                  onClick={() =>
-                    acceptCommission(
-                      selected?.commissionerAddress,
-                      selected?.commissionID,
-                      onClose,
-                    )
-                  }
-                >
-                  Accept
-                </AcceptButton>
-                <Button
-                  onClick={() =>
-                    rejectCommission(
-                      selected?.commissionerAddress,
-                      selected?.commissionID,
-                      onClose,
-                    )
-                  }
-                >
-                  Reject
-                </Button>
-              </div>
+            <Wrapper>
+              <CommissionImage
+                src={`https://artflowz.infura-ipfs.io/ipfs/${selected?.uploadFile}`}
+                alt="Commission image"
+              />
+              <CommissionInfo>
+                <CommissionLabel>ID:</CommissionLabel>
+                <CommissionValue>{selected?.commissionID}</CommissionValue>
+                <CommissionLabel>Amount:</CommissionLabel>
+                <CommissionValue>
+                  ${parseFloat(selected?.commissionAmount).toFixed(2)}
+                </CommissionValue>
+                {asCreator && (
+                  <>
+                    <CommissionLabel>Platform fee:</CommissionLabel>
+                    <CommissionValue>2.5%</CommissionValue>
+                  </>
+                )}
+                <CommissionLabel>
+                  {asCreator ? "Commissioner" : "Creator:"}
+                </CommissionLabel>
+                <CommissionValue>
+                  {asCreator
+                    ? selected?.commissionerAddress
+                    : selected?.creatorAddress}
+                </CommissionValue>
+                <CommissionLabel>Status:</CommissionLabel>
+                <CommissionValue>{selected?.status}</CommissionValue>
+                <CommissionLabel>Genre:</CommissionLabel>
+                <CommissionValue>{selected?.genre}</CommissionValue>
+                <CommissionLabel>NSFW:</CommissionLabel>
+                <CommissionValue>
+                  {selected?.nsfw ? "Yes" : "No"}
+                </CommissionValue>
+                <CommissionLabel>Notes:</CommissionLabel>
+                <CommissionValue>{selected?.notes}</CommissionValue>
+                <CommissionLabel>Link:</CommissionLabel>
+                <CommissionValue>{selected?.link}</CommissionValue>
+              </CommissionInfo>
+            </Wrapper>
+            {asCreator ? (
+              <>
+                {selected?.status !== "accepted" ? (
+                  <div>
+                    <AcceptButton
+                      onClick={() =>
+                        acceptCommission(
+                          selected?.commissionerAddress,
+                          selected?.commissionID,
+                          onClose,
+                        )
+                      }
+                    >
+                      Accept
+                    </AcceptButton>
+                    <Button
+                      onClick={() =>
+                        rejectCommission(
+                          selected?.commissionerAddress,
+                          selected?.commissionID,
+                          onClose,
+                        )
+                      }
+                    >
+                      Reject
+                    </Button>
+                  </div>
+                ) : (
+                  <CompleteButton onClick={handleButtonClick}>
+                    Complete
+                  </CompleteButton>
+                )}
+              </>
             ) : (
-              <CompleteButton onClick={handleButtonClick}>
-                Complete
-              </CompleteButton>
+              <Button
+                onClick={() =>
+                  cancelCommission(selected?.commissionID, onClose)
+                }
+              >
+                {selected?.status === "rejected" ? "Remove" : "Cancel"}
+              </Button>
             )}
           </>
-        ) : (
-          <Button
-            onClick={() => cancelCommission(selected?.commissionID, onClose)}
-          >
-            {selected?.status === "rejected" ? "Remove" : "Cancel"}
-          </Button>
         )}
       </ModalContainer>
       <CompleteModal

@@ -229,11 +229,11 @@ pub contract ArtFlowz {
         }
 
         // Commissioner
-        pub fun mint(name: String, description: String, image: String, creatorAddress: Address): @ArtPiece.NFT {
+        pub fun mint(name: String, description: String, image: String): @ArtPiece.NFT {
             pre {
                 self.details.completed: "Can't mint artwork: Commission must first be completed."
             }
-            return <-ArtPiece.mint(name: name, description: description, image: image, creatorAddress: creatorAddress)
+            return <-ArtPiece.mint(name: name, description: description, image: image, creatorAddress: self.creatorAddress)
         }
 
         pub fun getFee(): UFix64 {

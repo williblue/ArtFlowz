@@ -114,6 +114,7 @@ export default function useArtFlowz() {
           })
         })
       handleThankYouModalOpen()
+      getAllCommissions()
     } catch (err) {
       toast.update(id, {
         render: "Error, try again later...",
