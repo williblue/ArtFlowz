@@ -4,16 +4,6 @@ import {
   ModalContainer,
   CloseButton,
   Title,
-  Label,
-  Input,
-  Select,
-  TextArea,
-  CheckBoxWrapper,
-  CheckBox,
-  SubmitButton,
-  Row,
-  Column,
-  UploadFile,
   CreatorImg,
 } from "./styles"
 

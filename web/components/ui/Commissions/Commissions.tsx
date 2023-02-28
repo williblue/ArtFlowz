@@ -1,10 +1,11 @@
 import { useAuth } from "@components/auth/AuthProvider"
 import React, { FC } from "react"
 import styled from "styled-components"
+import CommissionTable from "../CommissionTable"
 
 const Container = styled.div`
   margin: 0 auto;
-  padding: 100px 0;
+  padding: 40px 0;
   min-height: min-content;
   max-height: max-content;
   width: 100%;
@@ -20,17 +21,17 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div`
-  width: 80%;
-`
-
-const TitleWrapper = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 const Title = styled.h2`
   font-size: 3rem;
   font-weight: normal;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  margin-top: 60px;
 `
 
 const HeroText = styled.div`
@@ -47,26 +48,6 @@ const HeroText = styled.div`
     width: 85%;
     padding-top: 200px;
   }
-`
-
-const Table = styled.table`
-  border-collapse: collapse;
-  width: 100%;
-  max-width: 1000px;
-`
-
-const TableHead = styled.thead`
-  background-color: #7539d4;
-  color: white;
-`
-
-const TableRow = styled.tr`
-  border-bottom: 1px solid #ccc;
-`
-
-const TableCell = styled.td`
-  padding: 10px;
-  text-align: center;
 `
 
 const Button = styled.button`
@@ -96,40 +77,22 @@ const Hero: FC = () => {
       genre: "Artwork",
       status: "Pending",
     },
+    {
+      requestId: "67890",
+      offerAmount: "500",
+      creator: "Jane Doe",
+      genre: "Artwork",
+      status: "Pending",
+    },
   ]
   return (
     <Container>
       {loggedIn ? (
         <Wrapper>
-          <TitleWrapper>
-            <Title>Commissions</Title>
-          </TitleWrapper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Request ID</TableCell>
-                <TableCell>Offer Amount (USDC)</TableCell>
-                <TableCell>Creator</TableCell>
-                <TableCell>Genre</TableCell>
-                <TableCell>Status</TableCell>
-                <TableCell>Action</TableCell>
-              </TableRow>
-            </TableHead>
-            <tbody>
-              {data.map((item) => (
-                <TableRow key={item.requestId}>
-                  <TableCell>{item.requestId}</TableCell>
-                  <TableCell>{item.offerAmount}</TableCell>
-                  <TableCell>{item.creator}</TableCell>
-                  <TableCell>{item.genre}</TableCell>
-                  <TableCell>{item.status}</TableCell>
-                  <TableCell>
-                    <Button>View</Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </tbody>
-          </Table>
+          <Title>Ongoing Commissions</Title>
+          <CommissionTable data={data} />
+          <Title>Completed Commissions</Title>
+          <CommissionTable data={data} />
         </Wrapper>
       ) : (
         <Button onClick={() => logIn()}>Connect Wallet</Button>
