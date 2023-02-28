@@ -27,7 +27,7 @@ export default function useProfile() {
   const createCreator = async (
     name: string,
     avatar: string,
-    handleThankYouModalOpen: () => void,
+    handleAccountCreatedButtonClick: () => void,
   ) => {
     const id = toast.loading("Initializing...")
 
@@ -146,7 +146,7 @@ export default function useProfile() {
             autoClose: 5000,
           })
         })
-      handleThankYouModalOpen()
+      handleAccountCreatedButtonClick()
       getAllProfiles()
     } catch (err) {
       toast.update(id, {

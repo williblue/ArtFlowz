@@ -19,6 +19,7 @@ type Props = {
   onClose: () => void
   creatorName: string
   creatorImage: string
+  handleAccountCreatedButtonClick: () => void
 }
 
 const CreateCreatorModal: FC<Props> = ({
@@ -26,12 +27,15 @@ const CreateCreatorModal: FC<Props> = ({
   onClose,
   creatorName,
   creatorImage,
+  handleAccountCreatedButtonClick,
 }) => {
   const [name, setName] = useState("")
   const [genreFile, setGenreFile] = useState<File | undefined>(undefined)
   const [previewUrl, setPreviewUrl] = useState<string | undefined>(undefined)
   const [cid, setCid] = useState("")
-  const [fileUrl, updateFileUrl] = useState<any>(defaultImg.src)
+  const [fileUrl, updateFileUrl] = useState<any>(
+    "https://raw.githubusercontent.com/williblue/ArtFlowz/main/web/public/default_image.png",
+  )
 
   const { createCreator } = useUser()
 
@@ -133,29 +137,15 @@ const CreateCreatorModal: FC<Props> = ({
             onChange={(e) => setName(e.target.value)}
             required
           />
-        </p>
-        {fileUrl ? (
-          <SubmitButton
-            onClick={() => {
-              createCreator(name, fileUrl)
-              onClose()
-            }}
-          >
-            Confirm
-          </SubmitButton>
-        ) : (
-          <SubmitButton
-            onClick={() => {
-              createCreator(
-                name,
-                "https://raw.githubusercontent.com/williblue/ArtFlowz/main/web/public/default_image.png",
-              )
-              onClose()
-            }}
-          >
-            Confirm
-          </SubmitButton>
-        )}
+        </p>{" "}
+        <SubmitButton
+          onClick={() => {
+            createCreator(name, fileUrl, handleAccountCreatedButtonClick)
+            onClose()
+          }}
+        >
+          Confirm
+        </SubmitButton>
       </ModalContainer>
     </ModalOverlay>
   )

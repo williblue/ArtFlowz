@@ -104,6 +104,7 @@ const Navbar: FC = () => {
         onClose={handleModalClose}
         creatorName={""}
         creatorImage={""}
+        handleAccountCreatedButtonClick={handleAccountCreatedButtonClick}
       />
       <AccountCreatedModal
         isOpen={accountCreatedModal}

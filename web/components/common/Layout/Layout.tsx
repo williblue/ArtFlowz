@@ -18,6 +18,7 @@ fcl
   .put("0xFungibleToken", "0x9a0766d93b6608b7")
   .put("0xNonFungibleToken", "0x631e88ae7f1d7c20")
   .put("0xMetadataViews", "0x631e88ae7f1d7c20")
+  .put("0xFUSD", "0xe223d8a629e49c68")
   .put("0xProfile", "0x35717efbbce11c74")
   .put("0xFiatToken", "0xa983fecbed621163")
   .put("0xFlowToken", "0x7e60df042a9c0868")

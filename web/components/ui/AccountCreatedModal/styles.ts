@@ -18,7 +18,7 @@ export const ModalContainer = styled.div`
   background-color: #fff;
   border-radius: 10px;
   padding: 30px;
-  width: 80%;
+  width: 40%;
   max-width: 800px;
   margin: 0 auto;
   margin-top: 60px;
@@ -114,4 +114,14 @@ export const CreatorImg = styled.img`
   height: 20px;
   border-radius: 50%;
   padding-right: 8px;
+`
+export const ShareLink = styled.a`
+  margin: 0 1rem;
+  color: #444;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    color: #222;
+  }
 `
