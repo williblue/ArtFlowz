@@ -545,7 +545,7 @@ export default function useArtFlowz() {
         .onceSealed()
         .then((result: any) => {
           toast.update(id, {
-            render: "Transaction Sealed",
+            render: "Your NFT has been minted!",
             type: "success",
             isLoading: false,
             autoClose: 5000,
