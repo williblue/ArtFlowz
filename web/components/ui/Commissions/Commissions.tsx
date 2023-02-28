@@ -62,7 +62,7 @@ const Button = styled.button`
 `
 
 const Hero: FC = () => {
-  const { loggedIn, logIn } = useAuth()
+  const { loggedIn, logIn, user } = useAuth()
   const { allCommissions } = useUser()
   const [selected, select] = useState()
   const [showModal, setShowModal] = useState(false)
@@ -82,6 +82,7 @@ const Hero: FC = () => {
       creator: "John Doe",
       genre: "Artwork",
       status: "completed",
+      commissionerAddress: "",
     },
     {
       requestId: "67890",
@@ -104,14 +105,20 @@ const Hero: FC = () => {
         <Wrapper>
           <Title>Ongoing Commissions</Title>
           <CommissionTable
-            data={allCommissions}
+            data={allCommissions?.filter(
+              (item: any) =>
+                item.status !== "completed" &&
+                item.commissionerAddress === user?.addr,
+            )}
             select={select}
             handleButtonClick={handleButtonClick}
           />
           <Title>Completed Commissions</Title>
           <CommissionTable
             data={allCommissions?.filter(
-              (item: any) => item.status === "completed",
+              (item: any) =>
+                item.status === "completed" &&
+                item.commissionerAddress === user?.addr,
             )}
             select={select}
             handleButtonClick={handleButtonClick}
