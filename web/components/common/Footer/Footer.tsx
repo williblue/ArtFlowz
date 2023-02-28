@@ -20,13 +20,17 @@ const Wrapper = styled.div`
   padding: 3em 0px 4em;
 `
 
+const A = styled.a`
+  color: white;
+`
+
 const Footer: FC = () => {
   return (
     <Container>
       <Wrapper>
-        <a href="https://www.onflow.org/" target="_blank" rel="noreferrer">
-          Flow blockchain
-        </a>
+        <A href="https://www.flow.com/" target="_blank" rel="noreferrer">
+          Built on Flow
+        </A>
       </Wrapper>
     </Container>
   )
