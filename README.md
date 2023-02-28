@@ -18,7 +18,10 @@ CreatorProfile.cdc
 ### Transactions
 
 ✅ Create Commission  
-✅ View Commissions  
 ✅ Cancel Commission  
 ✅ Accept Commission (Creator)  
 ✅ Reject Commission (Creator)
+
+### Scripts
+
+✅ View Commissions
