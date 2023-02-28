@@ -162,12 +162,8 @@ const MintModal: FC<Props> = ({ isOpen, onClose, selected, closeParent }) => {
               onChange={(e) => setDescription(e.target.value)}
               required
             />
-            <CommissionLabel>ID:</CommissionLabel>
-            <CommissionValue>{selected?.commissionID}</CommissionValue>
-            <CommissionLabel>You receive:</CommissionLabel>
-            <CommissionValue>
-              ${(parseFloat(selected?.commissionAmount) * 0.975).toFixed(2)}
-            </CommissionValue>
+            <CommissionLabel>Creator:</CommissionLabel>
+            <CommissionValue>{selected?.creatorAddress}</CommissionValue>
             <CommissionLabel>Creator Royalty</CommissionLabel>
             <CommissionValue>10%</CommissionValue>
           </CommissionInfo>
