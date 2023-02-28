@@ -68,11 +68,11 @@ const Navbar: FC = () => {
       </NavLogo>
       <NavLinks>
         <NavLink href="/">Explore</NavLink>
-        <NavLink href="/">Categories</NavLink>
+        {loggedIn && <NavLink href="/commissions">My Commissions</NavLink>}
         <CtaButton>Become a Creator</CtaButton>
         {loggedIn ? (
           // <ProfilePicture src={profilePicture} alt="Profile Picture" />
-          <></>
+          <NavLink onClick={() => logOut()}>Sign Out</NavLink>
         ) : (
           <NavLink onClick={() => logIn()}>Sign In</NavLink>
         )}

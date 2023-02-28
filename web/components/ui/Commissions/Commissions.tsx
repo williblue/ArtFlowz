@@ -1,7 +1,9 @@
 import { useAuth } from "@components/auth/AuthProvider"
-import React, { FC } from "react"
+import { useUser } from "@components/user/UserProvider"
+import React, { FC, useState } from "react"
 import styled from "styled-components"
 import CommissionTable from "../CommissionTable"
+import CommissionViewModal from "../CommissionViewModal"
 
 const Container = styled.div`
   margin: 0 auto;
@@ -61,6 +63,17 @@ const Button = styled.button`
 
 const Hero: FC = () => {
   const { loggedIn, logIn } = useAuth()
+  const { allCommissions } = useUser()
+  const [selected, select] = useState()
+  const [showModal, setShowModal] = useState(false)
+
+  const handleModalClose = () => {
+    setShowModal(false)
+  }
+
+  const handleButtonClick = () => {
+    setShowModal(true)
+  }
 
   const data = [
     {
@@ -68,7 +81,7 @@ const Hero: FC = () => {
       offerAmount: "1000",
       creator: "John Doe",
       genre: "Artwork",
-      status: "Accepted",
+      status: "completed",
     },
     {
       requestId: "67890",
@@ -82,7 +95,7 @@ const Hero: FC = () => {
       offerAmount: "500",
       creator: "Jane Doe",
       genre: "Artwork",
-      status: "Pending",
+      status: "completed",
     },
   ]
   return (
@@ -90,15 +103,29 @@ const Hero: FC = () => {
       {loggedIn ? (
         <Wrapper>
           <Title>Ongoing Commissions</Title>
-          <CommissionTable data={data} />
+          <CommissionTable
+            data={allCommissions}
+            select={select}
+            handleButtonClick={handleButtonClick}
+          />
           <Title>Completed Commissions</Title>
-          <CommissionTable data={data} />
+          <CommissionTable
+            data={allCommissions?.filter(
+              (item: any) => item.status === "completed",
+            )}
+            select={select}
+            handleButtonClick={handleButtonClick}
+          />
         </Wrapper>
       ) : (
         <Button onClick={() => logIn()}>Connect Wallet</Button>
       )}
-
       <HeroText>Art made personal.</HeroText>
+      <CommissionViewModal
+        isOpen={showModal}
+        onClose={handleModalClose}
+        selected={selected}
+      />
     </Container>
   )
 }

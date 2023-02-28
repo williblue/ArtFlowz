@@ -2,13 +2,9 @@ import { FC } from "react"
 import styled from "styled-components"
 
 type Props = {
-  data: {
-    requestId: string
-    offerAmount: string
-    creator: string
-    genre: string
-    status: string
-  }[]
+  data: any
+  select: any
+  handleButtonClick: () => void
 }
 
 const Table = styled.table`
@@ -40,7 +36,7 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const CommissionTable: FC<Props> = ({ data }) => {
+const CommissionTable: FC<Props> = ({ data, select, handleButtonClick }) => {
   return (
     <Table>
       <TableHead>
@@ -54,15 +50,24 @@ const CommissionTable: FC<Props> = ({ data }) => {
         </TableRow>
       </TableHead>
       <tbody>
-        {data.map((item) => (
-          <TableRow key={item.requestId}>
-            <TableCell>{item.requestId}</TableCell>
-            <TableCell>{item.offerAmount}</TableCell>
-            <TableCell>{item.creator}</TableCell>
+        {data?.map((item: any) => (
+          <TableRow key={item.commissionID}>
+            <TableCell>{item.commissionID}</TableCell>
+            <TableCell>
+              {parseFloat(item.commissionAmount).toFixed(2)}
+            </TableCell>
+            <TableCell>{item.creatorAddress}</TableCell>
             <TableCell>{item.genre}</TableCell>
             <TableCell>{item.status}</TableCell>
             <TableCell>
-              <Button>View</Button>
+              <Button
+                onClick={() => {
+                  select(item)
+                  handleButtonClick()
+                }}
+              >
+                View
+              </Button>
             </TableCell>
           </TableRow>
         ))}
