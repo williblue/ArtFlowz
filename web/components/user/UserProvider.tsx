@@ -23,6 +23,7 @@ const UserProvider: FC<Props> = ({ children }) => {
     acceptCommission,
     rejectCommission,
     completeCommission,
+    mintCommission,
   } = useArtFlowz()
 
   return (
@@ -35,6 +36,7 @@ const UserProvider: FC<Props> = ({ children }) => {
         acceptCommission,
         rejectCommission,
         completeCommission,
+        mintCommission,
       }}
     >
       {children}
