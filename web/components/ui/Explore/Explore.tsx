@@ -10,7 +10,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   padding: 0rem 0rem;
   @media (max-width: 1010px) {
     flex-direction: column;
@@ -69,6 +69,13 @@ const CreatorList = styled.div`
   justify-content: center;
 `
 
+const Title = styled.h2`
+  font-size: 3rem;
+  font-weight: normal;
+  margin-bottom: 40px;
+  margin-top: 60px;
+`
+
 const Explore: FC = () => {
   const { allProfiles } = useUser()
   const [selectedCreator, setSelectedCreator] = useState<any>()
@@ -92,6 +99,7 @@ const Explore: FC = () => {
   }
   return (
     <Container>
+      <Title>Request Commissions</Title>
       <CreatorList>
         {allProfiles?.map((creator: any) => (
           <CreatorCard
