@@ -5,6 +5,7 @@ import logo from "/public/ArtFlowz_logo.png"
 import { useAuth } from "@components/auth/AuthProvider"
 import CreateCreatorModal from "@components/ui/CreateCreatorModal"
 import AccountCreatedModal from "@components/ui/AccountCreatedModal"
+import { useUser } from "@components/user/UserProvider"
 
 const Nav = styled.nav`
   display: flex;
@@ -61,6 +62,7 @@ const ProfilePicture = styled.img`
 
 const Navbar: FC = () => {
   const { loggedIn, user, logIn, logOut } = useAuth()
+  const { allProfiles } = useUser()
 
   const [showModal, setShowModal] = useState(false)
   const [accountCreatedModal, setAccountCreatedModal] = useState(false)
@@ -89,9 +91,16 @@ const Navbar: FC = () => {
         </Link>
       </NavLogo>
       <NavLinks>
-        <NavLink href="/">Explore</NavLink>
+        <NavLink href="/explore">Explore</NavLink>
         {loggedIn && <NavLink href="/commissions">My Commissions</NavLink>}
-        <CtaButton onClick={handleButtonClick}>Become a Creator</CtaButton>
+        {allProfiles?.some((profile: any) => {
+          return profile.address === user?.addr
+        }) && <NavLink href="/dashboard">Dashboard</NavLink>}
+        {!allProfiles?.some((profile: any) => {
+          return profile.address === user?.addr
+        }) && (
+          <CtaButton onClick={handleButtonClick}>Become a Creator</CtaButton>
+        )}
         {loggedIn ? (
           // <ProfilePicture src={profilePicture} alt="Profile Picture" />
           <NavLink onClick={() => logOut()}>Sign Out</NavLink>

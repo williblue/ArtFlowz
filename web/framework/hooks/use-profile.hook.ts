@@ -22,6 +22,7 @@ export default function useProfile() {
 
   useEffect(() => {
     getAllProfiles()
+    getAllCreators()
   }, [])
 
   const createCreator = async (
@@ -181,6 +182,23 @@ export default function useProfile() {
       }`,
       })
       setAllProfiles(res)
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const getAllCreators = async () => {
+    try {
+      let res = await query({
+        cadence: `
+        import CreatorProfile from 0xCreatorProfile
+        
+        pub fun main() : [Address] {
+          return CreatorProfile.getAllCreators()
+      }`,
+      })
+
       console.log(res)
     } catch (err) {
       console.log(err)

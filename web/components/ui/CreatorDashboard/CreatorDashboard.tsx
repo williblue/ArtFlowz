@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import styled from "styled-components"
 import BannerImg from "/public/dashboardbanner.png"
 import DalleImg from "/public/dalle.jpg"
@@ -117,10 +117,11 @@ const H2 = styled.h2`
 `
 
 const CreatorDashboard: FC = () => {
-  const { allCommissions } = useUser()
+  const { allCommissions, allProfiles } = useUser()
   const [showModal, setShowModal] = useState(false)
   const [selected, select] = useState()
   const { user } = useAuth()
+  const [creator, setCreator] = useState<any>()
 
   const handleModalClose = () => {
     setShowModal(false)
@@ -129,15 +130,22 @@ const CreatorDashboard: FC = () => {
   const handleButtonClick = () => {
     setShowModal(true)
   }
+
+  useEffect(() => {
+    setCreator(
+      allProfiles?.find((profile: any) => profile.address === user?.addr),
+    )
+  }, [, user])
+
   return (
     <Container>
       <BannerImage />
       <Wrapper>
         <ProfileCardContainer>
-          <CreatorImage src={DalleImg.src} />
+          <CreatorImage src={creator?.avatar} />
 
-          <Title>Dalle Find</Title>
-          <Subtitle>@dalle_e</Subtitle>
+          <Title>{creator?.name}</Title>
+          {creator?.findName && <Subtitle>@{creator?.findName}</Subtitle>}
           <Total>32,212 USDC</Total>
           <TotalSales>Total Sales</TotalSales>
           <DashboardText>Dashboard</DashboardText>
