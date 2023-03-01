@@ -132,10 +132,14 @@ const CreatorDashboard: FC = () => {
   }
 
   useEffect(() => {
-    setCreator(
-      allProfiles?.find((profile: any) => profile.address === user?.addr),
-    )
-  }, [, user])
+    if (allProfiles?.length > 0) {
+      const creatorFound = allProfiles?.find(
+        (profile: any) => profile.address === user?.addr,
+      )
+
+      setCreator(creatorFound)
+    }
+  }, [user, allProfiles])
 
   return (
     <Container>
