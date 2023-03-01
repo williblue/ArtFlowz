@@ -33,6 +33,7 @@ const CreatorCard = styled.div`
   border-radius: 4px;
   padding: 16px;
   margin: 16px;
+  cursor: pointer;
 `
 
 const CreatorImage = styled.img`
