@@ -207,8 +207,8 @@ const Hero: FC = () => {
         </Wrapper>
         <HeroText>Art made personal.</HeroText>
         <ButtonContainer>
-          <Link href="/dashboard">
-            <ButtonUnfilled>VIEW PROFILE</ButtonUnfilled>
+          <Link href="/explore">
+            <ButtonUnfilled>VIEW CREATORS</ButtonUnfilled>
           </Link>
           <Button onClick={handleButtonClick}>NEW REQEUST</Button>
         </ButtonContainer>
